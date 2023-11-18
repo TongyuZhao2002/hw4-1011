@@ -91,8 +91,8 @@ def your_post_processing(output_string):
             potential_answer.append((int(match), confidence))
 
     if potential_answer:
-        highest_confidence = max(potential_answers, key=lambda x: x[1])[1]
-        high_confidence_matches = [ans for ans, conf in potential_answers if conf == highest_confidence]
+        highest_confidence = max(potential_answer, key=lambda x: x[1])[1]
+        high_confidence_matches = [ans for ans, conf in potential_answer if conf == highest_confidence]
     
         if len(high_confidence_matches) > 1:
             # If there's a tie, choose the most frequently occurring answer
