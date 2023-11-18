@@ -40,8 +40,8 @@ def your_config():
         'temperature': 0.3,
         'top_k': 20,
         'top_p': 0.5,
-        'repetition_penalty': 1,
-        'stop': []}
+        'repetition_penalty': 2,
+        'stop': ['\n', 'Answer:', 'sum is', 'equals', 'sum of the two numbers is:']}
     
     return config
 
@@ -83,10 +83,17 @@ def your_post_processing(output_string):
             potential_answer.append((int(match), confidence))
 
     if potential_answer:
-        return max(potential_answer, key=lambda x: x[1])[0]
+        highest_confidence = max(potential_answers, key=lambda x: x[1])[1]
+        high_confidence_matches = [ans for ans, conf in potential_answers if conf == highest_confidence]
+    
+        if len(high_confidence_matches) > 1:
+            # If there's a tie, choose the most frequently occurring answer
+            most_common = Counter(high_confidence_matches).most_common(1)
+            return most_common[0][0] if most_common else high_confidence_matches[0]
+        else:
+            return high_confidence_matches[0]
 
     only_digits = re.sub(r"\D", "", output_string.splitlines()[0])
-
     try:
         res = int(only_digits)
     except:
