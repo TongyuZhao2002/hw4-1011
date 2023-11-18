@@ -19,7 +19,15 @@ def your_prompt():
         A string.
     Example: a=1111, b=2222, prefix='Input: ', suffix='\nOutput: '
     """
-    prefix = '''Question: Calculate the exact sum of 1234567+1234567?\nThe sum of the two numbers is: 2469134\n Question: Calculate the exact sum of '''
+    prefix = '''Question: Calculate the exact sum of 5+8?\nThe sum of the two numbers is: 13\n
+                Question: Calculate the exact sum of 54+17?\nThe sum of the two numbers is: 71\n
+                Question: Calculate the exact sum of 123+456?\nThe sum of the two numbers is: 579\n
+                Question: Calculate the exact sum of 3490+4378?\nThe sum of the two numbers is: 7868\n
+                Question: Calculate the exact sum of 68540+65218?\nThe sum of the two numbers is: 133758\n
+                Question: Calculate the exact sum of 764896+465378?\nThe sum of the two numbers is: 1230274\n
+                Question: Calculate the exact sum of 6754297+2427890?\nThe sum of the two numbers is: 9182187\n
+                Question: Calculate the exact sum of 9858210+3542677?\nThe sum of the two numbers is: 13400887\n
+                Question: Calculate the exact sum of '''
 
     suffix = '?\nThe sum of the two numbers is: '
 
@@ -93,12 +101,10 @@ def your_post_processing(output_string):
         else:
             return high_confidence_matches[0]
 
-    only_digits = re.sub(r"\D", "", output_string.splitlines())
-    frequency = Counter(only_digits)
-    most_common = frequency.most_common(1)
-    
+    only_digits = re.sub(r"\D", "", output_string.splitlines()[0])
+
     try:
-        res = int(most_common[0][0])
+        res = int(only_digits)
     except:
         res = 0
     return res
