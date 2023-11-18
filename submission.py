@@ -72,7 +72,7 @@ def your_post_processing(output_string):
         by extracting the two given numbers and adding them.
         the autograder will check whether the post processing function contains arithmetic additiona and the graders might also manually check.
     """
-    patterns = [r"sum is (\d{7,8})", r"total: (\d{7,8})", r"equals (\d{7,8})", r"Answer: (\d{7,8})", r"answer is (\d{7,8})", r"sum of the two numbers is: (\d{7,8})"]
+    patterns = [r"sum is (\d{7,8})", r"total: (\d+)", r"equals (\d+)", r"Answer: (\d+)", r"answer is (\d+)", r"sum of the two numbers is: (\d+)"]
 
     potential_answer = []
     
@@ -93,9 +93,12 @@ def your_post_processing(output_string):
         else:
             return high_confidence_matches[0]
 
-    only_digits = re.sub(r"\D", "", output_string.splitlines()[0])
+    only_digits = re.sub(r"\D", "", output_string.splitlines())
+    frequency = Counter(only_digits)
+    most_common = frequency.most_common(1)
+    
     try:
-        res = int(only_digits)
+        res = int(most_common[0][0])
     except:
         res = 0
     return res
