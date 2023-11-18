@@ -72,7 +72,7 @@ def your_post_processing(output_string):
         by extracting the two given numbers and adding them.
         the autograder will check whether the post processing function contains arithmetic additiona and the graders might also manually check.
     """
-    patterns = [r"sum is (\d+)", r"total: (\d+)", r"equals (\d+)", r"Answer: (\d+)", r"answer is (\d+)", r"sum of the two numbers is: (\d+)"]
+    patterns = [r"sum is (\d{7,8})", r"total: (\d{7,8})", r"equals (\d{7,8})", r"Answer: (\d{7,8})", r"answer is (\d{7,8})", r"sum of the two numbers is: (\d{7,8})"]
 
     potential_answer = []
     
