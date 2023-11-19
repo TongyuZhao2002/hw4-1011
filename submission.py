@@ -5,6 +5,10 @@ import random
 import numpy as np
 import requests
 import re
+from collections import Counter
+
+def your_wait_time():
+    return 2
 
 # api key for query. see https://docs.together.ai/docs/get-started
 def your_api_key():
@@ -101,8 +105,8 @@ def your_post_processing(output_string):
         else:
             return high_confidence_matches[0]
 
-    only_digits = re.sub(r"\D", "", output_string.splitlines()[0])
-
+    first_line = output_string.splitlines()[0]
+    only_digits = re.sub(r"\D", "", first_line)
     try:
         res = int(only_digits)
     except:
